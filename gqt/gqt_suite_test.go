@@ -42,6 +42,14 @@ func TestGqt(t *testing.T) {
 		fmt.Printf("gqt began running at %s\n", gqtStartTime)
 
 		var err error
+
+		// TEST CODE FOR KERNEL PANIC
+		// mount -t sysfs sysfs /sys -o remount,rw,nosuid,nodev,noexec
+		if err := syscall.Mount("sysfs", "/sys", "sysfs", syscall.MS_REMOUNT|syscall.MS_NOSUID|syscall.MS_NODEV|syscall.MS_NOEXEC, ""); err != nil {
+			panic(err)
+		}
+		// END TEST CODE FOR KERNEL PANIC
+
 		bins := make(map[string]string)
 
 		bins["oci_runtime_path"] = os.Getenv("OCI_RUNTIME")

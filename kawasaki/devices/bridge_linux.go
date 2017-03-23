@@ -2,6 +2,7 @@ package devices
 
 import (
 	"fmt"
+	"io/ioutil"
 	"math/rand"
 	"net"
 	"sync"
@@ -31,6 +32,10 @@ func (Bridge) Create(name string, ip net.IP, subnet *net.IPNet) (intf *net.Inter
 
 	if err := netlink.LinkAdd(link); err != nil && err.Error() != "file exists" {
 		return nil, fmt.Errorf("devices: create bridge: %v", err)
+	}
+
+	if err := ioutil.WriteFile("/sys/devices/virtual/net/"+name+"/bridge/multicast_snooping", []byte("0"), 0644); err != nil {
+		return nil, fmt.Errorf("devices: set multicast snooping off: %+v", err)
 	}
 
 	hAddr, _ := net.ParseMAC(randMacAddr())
