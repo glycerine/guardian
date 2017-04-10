@@ -69,7 +69,7 @@ var _ = Describe("Dadoo ExecRunner", func() {
 		processPath = filepath.Join(bundlePath, "the-process")
 		pidPath = filepath.Join(processPath, "0.pid")
 
-		runner = dadoo.NewExecRunner("path-to-dadoo", "path-to-runc", fakeProcessIDGenerator, fakePidGetter, fakeCommandRunner, false)
+		runner = dadoo.NewExecRunner("path-to-dadoo", "path-to-runc", "path-to-newuidmap", "path-to-newgidmap", fakeProcessIDGenerator, fakePidGetter, fakeCommandRunner, false)
 		log = lagertest.NewTestLogger("test")
 
 		runcReturns = 0
@@ -195,6 +195,7 @@ var _ = Describe("Dadoo ExecRunner", func() {
 				ConsistOf(
 					"path-to-dadoo",
 					"exec", "path-to-runc", filepath.Join(processPath, processID), "some-handle",
+					"path-to-newuidmap", "path-to-newgidmap",
 				),
 			)
 		})
@@ -221,6 +222,7 @@ var _ = Describe("Dadoo ExecRunner", func() {
 						"path-to-dadoo",
 						"-tty",
 						"exec", "path-to-runc", filepath.Join(processPath, processID), "some-handle",
+						"path-to-newuidmap", "path-to-newgidmap",
 					}),
 				)
 			})
@@ -257,7 +259,7 @@ var _ = Describe("Dadoo ExecRunner", func() {
 
 		Context("when cleanupProcessDirsOnWait is true", func() {
 			BeforeEach(func() {
-				runner = dadoo.NewExecRunner("path-to-dadoo", "path-to-runc", fakeProcessIDGenerator, fakePidGetter, fakeCommandRunner, true)
+				runner = dadoo.NewExecRunner("path-to-dadoo", "path-to-runc", "path-to-newuidmap", "path-to-newgidmap", fakeProcessIDGenerator, fakePidGetter, fakeCommandRunner, true)
 			})
 
 			It("cleans up the processes dir after Wait returns", func() {
@@ -275,7 +277,7 @@ var _ = Describe("Dadoo ExecRunner", func() {
 
 		Context("when cleanupProcessDirsOnWait is false", func() {
 			BeforeEach(func() {
-				runner = dadoo.NewExecRunner("path-to-dadoo", "path-to-runc", fakeProcessIDGenerator, fakePidGetter, fakeCommandRunner, false)
+				runner = dadoo.NewExecRunner("path-to-dadoo", "path-to-runc", "path-to-newuidmap", "path-to-newgidmap", fakeProcessIDGenerator, fakePidGetter, fakeCommandRunner, false)
 			})
 
 			It("does not clean up the processes dir after Wait returns", func() {
@@ -675,7 +677,7 @@ var _ = Describe("Dadoo ExecRunner", func() {
 
 		Context("when cleanupProcessDirsOnWait is true", func() {
 			BeforeEach(func() {
-				runner = dadoo.NewExecRunner("path-to-dadoo", "path-to-runc", fakeProcessIDGenerator, fakePidGetter, fakeCommandRunner, true)
+				runner = dadoo.NewExecRunner("path-to-dadoo", "path-to-runc", "path-to-newuidmap", "path-to-newgidmap", fakeProcessIDGenerator, fakePidGetter, fakeCommandRunner, true)
 			})
 
 			It("cleans up the processes dir after Wait returns", func() {
@@ -694,7 +696,7 @@ var _ = Describe("Dadoo ExecRunner", func() {
 
 		Context("when cleanupProcessDirsOnWait is false", func() {
 			BeforeEach(func() {
-				runner = dadoo.NewExecRunner("path-to-dadoo", "path-to-runc", fakeProcessIDGenerator, fakePidGetter, fakeCommandRunner, false)
+				runner = dadoo.NewExecRunner("path-to-dadoo", "path-to-runc", "path-to-newuidmap", "path-to-newgidmap", fakeProcessIDGenerator, fakePidGetter, fakeCommandRunner, false)
 			})
 
 			It("does not clean up the processes dir after Wait returns", func() {

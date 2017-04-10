@@ -45,6 +45,8 @@ func run() int {
 	runtime := flag.Args()[1] // e.g. runc
 	processStateDir := flag.Args()[2]
 	containerId := flag.Args()[3]
+	newuidmapPath := flag.Args()[4]
+	newgidmapPath := flag.Args()[5]
 
 	signals := make(chan os.Signal, 100)
 	signal.Notify(signals, syscall.SIGCHLD)
@@ -73,9 +75,9 @@ func run() int {
 			logAndExit(fmt.Sprintf("value for --socket-dir-path cannot exceed %d characters in length", MaxSocketDirPathLength))
 		}
 		ttySocketPath := setupTTYSocket(stdinR, stdoutW, winsz, pidFilePath, *socketDirPath)
-		runcExecCmd = exec.Command(runtime, "-debug", "-log", logFile, "exec", "-d", "-tty", "-console-socket", ttySocketPath, "-p", fmt.Sprintf("/proc/%d/fd/0", os.Getpid()), "-pid-file", pidFilePath, containerId)
+		runcExecCmd = exec.Command(runtime, "-debug", "-log", logFile, "-newuidmap", newuidmapPath, "-newgidmap", newgidmapPath, "exec", "-d", "-tty", "-console-socket", ttySocketPath, "-p", fmt.Sprintf("/proc/%d/fd/0", os.Getpid()), "-pid-file", pidFilePath, containerId)
 	} else {
-		runcExecCmd = exec.Command(runtime, "-debug", "-log", logFile, "exec", "-p", fmt.Sprintf("/proc/%d/fd/0", os.Getpid()), "-d", "-pid-file", pidFilePath, containerId)
+		runcExecCmd = exec.Command(runtime, "-debug", "-log", logFile, "-newuidmap", newuidmapPath, "-newgidmap", newgidmapPath, "exec", "-p", fmt.Sprintf("/proc/%d/fd/0", os.Getpid()), "-d", "-pid-file", pidFilePath, containerId)
 		runcExecCmd.Stdin = stdinR
 		runcExecCmd.Stdout = stdoutW
 		runcExecCmd.Stderr = stderrW
