@@ -131,8 +131,8 @@ func TestGqt(t *testing.T) {
 		Expect(os.MkdirAll(runcRootDir, 0700)).To(Succeed())
 		Expect(os.Chown(runcRootDir, int(unprivilegedUID), int(unprivilegedUID))).To(Succeed())
 
-		Expect(os.Chmod(newuidmapBin, 0755|os.ModeSetuid))
-		Expect(os.Chmod(newgidmapBin, 0755|os.ModeSetuid))
+		Expect(os.Chmod(newuidmapBin, 0755|os.ModeSetuid)).To(Succeed())
+		Expect(os.Chmod(newgidmapBin, 0755|os.ModeSetuid)).To(Succeed())
 	})
 
 	SetDefaultEventuallyTimeout(5 * time.Second)
