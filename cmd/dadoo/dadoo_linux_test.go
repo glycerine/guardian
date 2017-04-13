@@ -119,7 +119,7 @@ var _ = Describe("Dadoo", func() {
 			})
 			Expect(err).NotTo(HaveOccurred())
 
-			cmd := exec.Command(dadooBinPath, "exec", "runc", processDir, filepath.Base(bundlePath))
+			cmd := exec.Command(dadooBinPath, "exec", "runc", processDir, filepath.Base(bundlePath), "newuidmap", "newgidmap")
 			cmd.Stdin = bytes.NewReader(processSpec)
 			cmd.ExtraFiles = []*os.File{mustOpen("/dev/null"), runcLogFile, mustOpen("/dev/null")}
 
@@ -136,7 +136,7 @@ var _ = Describe("Dadoo", func() {
 			})
 			Expect(err).NotTo(HaveOccurred())
 
-			cmd := exec.Command(dadooBinPath, "exec", "runc", processDir, filepath.Base(bundlePath))
+			cmd := exec.Command(dadooBinPath, "exec", "runc", processDir, filepath.Base(bundlePath), "newuidmap", "newgidmap")
 			cmd.Stdin = bytes.NewReader(processSpec)
 			cmd.ExtraFiles = []*os.File{mustOpen("/dev/null"), runcLogFile, mustOpen("/dev/null")}
 
@@ -155,7 +155,7 @@ var _ = Describe("Dadoo", func() {
 			})
 			Expect(err).NotTo(HaveOccurred())
 
-			cmd := exec.Command(dadooBinPath, "exec", "runc", processDir, filepath.Base(bundlePath))
+			cmd := exec.Command(dadooBinPath, "exec", "runc", processDir, filepath.Base(bundlePath), "newuidmap", "newgidmap")
 			cmd.Stdin = bytes.NewReader(processSpec)
 			cmd.ExtraFiles = []*os.File{mustOpen("/dev/null"), runcLogFile, mustOpen("/dev/null")}
 
@@ -180,7 +180,7 @@ var _ = Describe("Dadoo", func() {
 			})
 			Expect(err).NotTo(HaveOccurred())
 
-			cmd := exec.Command(dadooBinPath, "exec", "runc", processDir, filepath.Base(bundlePath))
+			cmd := exec.Command(dadooBinPath, "exec", "runc", processDir, filepath.Base(bundlePath), "newuidmap", "newgidmap")
 			cmd.Stdin = bytes.NewReader(processSpec)
 			cmd.ExtraFiles = []*os.File{mustOpen("/dev/null"), runcLogFile, mustOpen("/dev/null")}
 
@@ -212,7 +212,7 @@ var _ = Describe("Dadoo", func() {
 			})
 			Expect(err).NotTo(HaveOccurred())
 
-			cmd := exec.Command(dadooBinPath, "exec", "runc", processDir, filepath.Base(bundlePath))
+			cmd := exec.Command(dadooBinPath, "exec", "runc", processDir, filepath.Base(bundlePath), "newuidmap", "newgidmap")
 			cmd.Stdin = bytes.NewReader(processSpec)
 			cmd.ExtraFiles = []*os.File{mustOpen("/dev/null"), runcLogFile, mustOpen("/dev/null")}
 
@@ -242,7 +242,7 @@ var _ = Describe("Dadoo", func() {
 			stdoutPipe := filepath.Join(processDir, "stdout")
 			Expect(syscall.Mkfifo(stdoutPipe, 0)).To(Succeed())
 
-			cmd := exec.Command(dadooBinPath, "exec", "runc", processDir, filepath.Base(bundlePath))
+			cmd := exec.Command(dadooBinPath, "exec", "runc", processDir, filepath.Base(bundlePath), "newuidmap", "newgidmap")
 			cmd.Stdin = bytes.NewReader(processSpec)
 			cmd.ExtraFiles = []*os.File{
 				mustOpen("/dev/null"),
@@ -290,7 +290,7 @@ var _ = Describe("Dadoo", func() {
 				encSpec, err := json.Marshal(spec)
 				Expect(err).NotTo(HaveOccurred())
 
-				cmd := exec.Command(dadooBinPath, "exec", "runc", processDir, filepath.Base(bundlePath))
+				cmd := exec.Command(dadooBinPath, "exec", "runc", processDir, filepath.Base(bundlePath), "newuidmap", "newgidmap")
 				cmd.ExtraFiles = []*os.File{mustOpen("/dev/null"), runcLogFile, mustOpen("/dev/null")}
 				cmd.Stdin = bytes.NewReader(encSpec)
 				_, err = gexec.Start(cmd, GinkgoWriter, GinkgoWriter)
@@ -324,7 +324,7 @@ var _ = Describe("Dadoo", func() {
 				encSpec, err := json.Marshal(spec)
 				Expect(err).NotTo(HaveOccurred())
 
-				cmd := exec.Command(dadooBinPath, "exec", "runc", processDir, filepath.Base(bundlePath))
+				cmd := exec.Command(dadooBinPath, "exec", "runc", processDir, filepath.Base(bundlePath), "newuidmap", "newgidmap")
 				cmd.ExtraFiles = []*os.File{mustOpen("/dev/null"), runcLogFile, mustOpen("/dev/null")}
 				cmd.Stdin = bytes.NewReader(encSpec)
 				process, err := gexec.Start(cmd, GinkgoWriter, GinkgoWriter)
@@ -376,7 +376,7 @@ var _ = Describe("Dadoo", func() {
 				encSpec, err := json.Marshal(spec)
 				Expect(err).NotTo(HaveOccurred())
 
-				cmd := exec.Command(dadooBinPath, "-tty", "exec", "runc", processDir, filepath.Base(bundlePath))
+				cmd := exec.Command(dadooBinPath, "-tty", "exec", "runc", processDir, filepath.Base(bundlePath), "newuidmap", "newgidmap")
 				cmd.ExtraFiles = []*os.File{mustOpen("/dev/null"), runcLogFile, mustOpen("/dev/null")}
 				cmd.Stdin = bytes.NewReader(encSpec)
 
@@ -408,7 +408,7 @@ var _ = Describe("Dadoo", func() {
 				encSpec, err := json.Marshal(spec)
 				Expect(err).NotTo(HaveOccurred())
 
-				cmd := exec.Command(dadooBinPath, "-tty", "exec", "runc", processDir, filepath.Base(bundlePath))
+				cmd := exec.Command(dadooBinPath, "-tty", "exec", "runc", processDir, filepath.Base(bundlePath), "newuidmap", "newgidmap")
 				cmd.ExtraFiles = []*os.File{mustOpen("/dev/null"), runcLogFile, mustOpen("/dev/null")}
 				cmd.Stdin = bytes.NewReader(encSpec)
 
@@ -451,7 +451,7 @@ var _ = Describe("Dadoo", func() {
 				encSpec, err := json.Marshal(spec)
 				Expect(err).NotTo(HaveOccurred())
 
-				cmd := exec.Command(dadooBinPath, "-tty", "exec", "runc", processDir, filepath.Base(bundlePath))
+				cmd := exec.Command(dadooBinPath, "-tty", "exec", "runc", processDir, filepath.Base(bundlePath), "newuidmap", "newgidmap")
 				cmd.ExtraFiles = []*os.File{mustOpen("/dev/null"), runcLogFile, mustOpen("/dev/null")}
 				cmd.Stdin = bytes.NewReader(encSpec)
 
@@ -496,7 +496,7 @@ var _ = Describe("Dadoo", func() {
 					encSpec, err := json.Marshal(spec)
 					Expect(err).NotTo(HaveOccurred())
 
-					cmd := exec.Command(dadooBinPath, "-tty", "exec", "runc", processDir, filepath.Base(bundlePath))
+					cmd := exec.Command(dadooBinPath, "-tty", "exec", "runc", processDir, filepath.Base(bundlePath), "newuidmap", "newgidmap")
 					cmd.ExtraFiles = []*os.File{mustOpen("/dev/null"), runcLogFile, mustOpen("/dev/null")}
 					cmd.Stdin = bytes.NewReader(encSpec)
 
@@ -543,7 +543,7 @@ var _ = Describe("Dadoo", func() {
 					encSpec, err := json.Marshal(spec)
 					Expect(err).NotTo(HaveOccurred())
 
-					cmd := exec.Command(dadooBinPath, "-tty", "exec", "runc", processDir, filepath.Base(bundlePath))
+					cmd := exec.Command(dadooBinPath, "-tty", "exec", "runc", processDir, filepath.Base(bundlePath), "newuidmap", "newgidmap")
 					cmd.ExtraFiles = []*os.File{mustOpen("/dev/null"), runcLogFile, mustOpen("/dev/null")}
 					cmd.Stdin = bytes.NewReader(encSpec)
 
@@ -621,7 +621,7 @@ var _ = Describe("Dadoo", func() {
 					})
 
 					It("exits with 2", func() {
-						dadooCmd := exec.Command(dadooBinPath, "-tty", "-socket-dir-path", string(longerThanAllowedSocketPath), "exec", "runc", processDir, filepath.Base(bundlePath))
+						dadooCmd := exec.Command(dadooBinPath, "-tty", "-socket-dir-path", string(longerThanAllowedSocketPath), "exec", "runc", processDir, filepath.Base(bundlePath), "newuidmap", "newgidmap")
 						dadooCmd.ExtraFiles = []*os.File{mustOpen("/dev/null"), runcLogFile, mustOpen("/dev/null")}
 						dadooCmd.Stdin = bytes.NewReader(encSpec)
 
@@ -647,7 +647,7 @@ var _ = Describe("Dadoo", func() {
 					})
 
 					It("kills the process and exits with 2", func() {
-						dadooCmd := exec.Command(dadooBinPath, "-tty", "-socket-dir-path", os.TempDir(), "exec", fakeRuncBinPath, processDir, filepath.Base(bundlePath))
+						dadooCmd := exec.Command(dadooBinPath, "-tty", "-socket-dir-path", os.TempDir(), "exec", fakeRuncBinPath, processDir, filepath.Base(bundlePath), "newuidmap", "newgidmap")
 						dadooCmd.ExtraFiles = []*os.File{mustOpen("/dev/null"), runcLogFile, mustOpen("/dev/null")}
 						dadooCmd.Stdin = bytes.NewReader(encSpec)
 
